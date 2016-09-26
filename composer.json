@@ -1,0 +1,24 @@
+{
+    "name": "mdavis1982/eve",
+    "description": "A Slack Bot",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthew Davis",
+            "email": "matt@mattdavis.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "coderstephen/slack-client": "^0.2.5",
+        "vlucas/phpdotenv": "^2.4",
+        "illuminate/support": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eve\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

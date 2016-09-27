@@ -2,7 +2,6 @@
 
 namespace Eve\Command;
 
-use Slack\User;
 use Eve\Message;
 use Slack\Channel;
 use Eve\SlackClient;

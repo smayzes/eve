@@ -18,7 +18,7 @@ class Eve
         $client->setToken(getenv('SLACK_TOKEN'));
 
         // Connect to Slack
-        $this->prepareMessageHandler($client, $commandManager);
+        $this->prepareMessageHandler($client);
         $this->connect($client);
 
         // Run!

@@ -10,9 +10,9 @@ class SlackClient extends RealtimeClient
     /**
      * @var string
      */
-    private $userId;
+    private $userId = '';
 
-    public function setUserId($id)
+    public function setUserId(string $id)
     {
         $this->userId = $id;
     }

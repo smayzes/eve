@@ -31,7 +31,7 @@ class PunCommand extends Command
     public function handle(Message $message)
     {
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
-        $content       = collect($this->puns)->random();
+        $content       = collect(self::PUNS)->random();
         
         $this->client->sendMessage(
             "{$messagePrefix}{$content}",

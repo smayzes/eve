@@ -3,15 +3,18 @@
 namespace Eve\Command;
 
 use Eve\Message;
-use Eve\SlackClient;
 
-abstract class Command
+interface Command
 {
-    public function __construct(SlackClient $client)
-    {
-        $this->client = $client;
-    }
+    /**
+     * @param Message $message
+     *
+     * @return bool
+     */
+    public function canHandle(Message $message): bool;
 
-    abstract public function canHandle(Message $message): bool;
-    abstract public function handle(Message $message);
+    /**
+     * @param Message $message
+     */
+    public function handle(Message $message);
 }

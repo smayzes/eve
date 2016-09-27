@@ -3,11 +3,11 @@
 namespace Eve;
 
 use Slack\User;
-use Eve\Message;
+use Slack\Payload;
 use React\EventLoop\Factory;
 use Eve\Command\CommandManager;
 
-class Eve
+final class Eve
 {
     public function run()
     {
@@ -25,6 +25,9 @@ class Eve
         $eventLoop->run();
     }
 
+    /**
+     * @param SlackClient $client
+     */
     private function connect(SlackClient $client)
     {
         $client->connect()->then(function() use ($client) {
@@ -36,11 +39,14 @@ class Eve
         });
     }
 
+    /**
+     * @param SlackClient $client
+     */
     private function prepareMessageHandler(SlackClient $client)
     {
         $manager = $this->makeManager($client);
 
-        $client->on('message', function ($data) use ($client, $manager) {
+        $client->on('message', function (Payload $data) use ($client, $manager) {
             $message = new Message($data->getData());
 
             // Only handle messages sent to the bot
@@ -50,15 +56,29 @@ class Eve
         });
     }
 
+    /**
+     * @param SlackClient $client
+     *
+     * @return CommandManager
+     */
     private function makeManager(SlackClient $client): CommandManager
     {
-        $manager = new CommandManager($client);
-        $manager->addCommand(\Eve\Command\PingCommand::class);
-        $manager->addCommand(\Eve\Command\SandwichCommand::class);
-        $manager->addCommand(\Eve\Command\SlapCommand::class);
-        $manager->addCommand(\Eve\Command\PunCommand::class);
-        $manager->addCommand(\Eve\Command\ThanksCommand::class);
+        $manager = CommandManager::create($client)
+            ->addCommand(Command\PingCommand::class)
+            ->addCommand(Command\SandwichCommand::class)
+            ->addCommand(Command\SlapCommand::class)
+            ->addCommand(Command\PunCommand::class)
+            ->addCommand(Command\ThanksCommand::class)
+        ;
 
         return $manager;
+    }
+
+    /**
+     * @return Eve
+     */
+    public static function create()
+    {
+        return new self();
     }
 }

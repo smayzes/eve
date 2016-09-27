@@ -2,8 +2,13 @@
 
 namespace Eve;
 
-class Message
+final class Message
 {
+    /**
+     * Message constructor.
+     *
+     * @param array $data
+     */
     public function __construct(array $data = [])
     {
         $this->channel = $data['channel'] ?? null;

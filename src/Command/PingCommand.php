@@ -2,19 +2,23 @@
 
 namespace Eve\Command;
 
-use Slack\User;
 use Eve\Message;
-use Slack\Channel;
-use Eve\SlackClient;
-use Slack\ChannelInterface;
 
-class PingCommand extends Command
+final class PingCommand extends ClientCommand
 {
+    /**
+     * @param Message $message
+     *
+     * @return bool
+     */
     public function canHandle(Message $message): bool
     {
         return false !== stripos($message->text(), 'ping');
     }
 
+    /**
+     * @param Message $message
+     */
     public function handle(Message $message)
     {
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";

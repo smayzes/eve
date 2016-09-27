@@ -4,36 +4,53 @@ namespace Eve\Command;
 
 use Eve\Message;
 use Eve\SlackClient;
-use Eve\Command\Command;
-use Illuminate\Support\Collection;
 
-class CommandManager
+final class CommandManager
 {
     /**
-     * @var Collection
+     * @var CommandCollection
      */
     private $commands;
 
-    public function __construct(SlackClient $client)
+    /**
+     * CommandManager constructor.
+     *
+     * @param SlackClient $client
+     */
+    private function __construct(SlackClient $client)
     {
         $this->client = $client;
 
-        $this->commands = new Collection();
+        $this->commands = new CommandCollection();
     }
 
+    /**
+     * @param string $command
+     *
+     * @return CommandManager
+     */
     public function addCommand(string $command)
     {
         $this->commands->push(new $command($this->client));
+
+        return $this;
     }
 
+    /**
+     * @param Message $message
+     */
     public function handle(Message $message)
     {
-        $command = $this->commands->filter(function (Command $command) use ($message) {
-            return $command->canHandle($message);
-        })->first();
-        
-        if ($command) {
-            $command->handle($message, $this->client);
-        }
+        $this->commands->commandFor($message)->handle($message);
+    }
+
+    /**
+     * @param SlackClient $client
+     *
+     * @return CommandManager
+     */
+    public static function create(SlackClient $client)
+    {
+        return new self($client);
     }
 }

@@ -2,19 +2,23 @@
 
 namespace Eve\Command;
 
-use Slack\User;
 use Eve\Message;
-use Slack\Channel;
-use Eve\SlackClient;
-use Slack\ChannelInterface;
 
-class SlapCommand extends Command
+final class SlapCommand extends ClientCommand
 {
+    /**
+     * @param Message $message
+     *
+     * @return bool
+     */
     public function canHandle(Message $message): bool
     {
         return !$message->isDm() && preg_match('/slap .+/', $message->text());
     }
 
+    /**
+     * @param Message $message
+     */
     public function handle(Message $message)
     {
         $receiver = $this->receiver($message);
@@ -27,13 +31,18 @@ class SlapCommand extends Command
         }
 
         $content .= "_slaps {$receiver} around a bit with a large trout._";
-        
+
         $this->client->sendMessage(
             $content,
             $message->channel()
         );
     }
 
+    /**
+     * @param Message $message
+     *
+     * @return string
+     */
     private function receiver(Message $message): string
     {
         preg_match('/^[^ ]+ [^ ]+ ([^ ]+)/', $message->text(), $matches);
@@ -41,5 +50,3 @@ class SlapCommand extends Command
         return $matches[1];
     }
 }
-
-

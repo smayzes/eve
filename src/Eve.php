@@ -57,6 +57,7 @@ class Eve
         $manager->addCommand(\Eve\Command\SandwichCommand::class);
         $manager->addCommand(\Eve\Command\SlapCommand::class);
         $manager->addCommand(\Eve\Command\PunCommand::class);
+        $manager->addCommand(\Eve\Command\ThanksCommand::class);
 
         return $manager;
     }

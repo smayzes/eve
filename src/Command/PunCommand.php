@@ -2,8 +2,8 @@
 
 namespace Eve\Command;
 
-use Eve\Loader\HasData;
 use Eve\Message;
+use Eve\Loader\HasData;
 use Eve\Loader\HasDataTrait;
 
 final class PunCommand extends ClientCommand implements HasData
@@ -28,7 +28,7 @@ final class PunCommand extends ClientCommand implements HasData
         $this->loadData();
 
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
-        $content       = collect($this->data)->random();
+        $content       = $this->data->random();
 
         $this->client->sendMessage(
             "{$messagePrefix}{$content}",

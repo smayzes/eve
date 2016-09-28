@@ -2,19 +2,14 @@
 
 namespace Eve\Command;
 
-use Eve\Loader\HasData;
 use Eve\Message;
-use Illuminate\Support\Collection;
+use Eve\Loader\HasData;
 use Eve\Loader\HasDataTrait;
+use Illuminate\Support\Collection;
 
 final class ThanksCommand extends ClientCommand implements HasData
 {
     use HasDataTrait;
-
-    /**
-     * @var Collection
-     */
-    private $data;
 
     /**
      * @param Message $message
@@ -34,8 +29,7 @@ final class ThanksCommand extends ClientCommand implements HasData
         $this->loadData();
 
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
-
-        $content = collect($this->data)->random();
+        $content       = $this->data->random();
 
         $this->client->sendMessage(
             "{$messagePrefix}{$content}",

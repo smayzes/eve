@@ -2,16 +2,16 @@
 
 namespace Eve;
 
-use Eve\Command\CommandCollection;
-use Eve\Command\PingCommand;
-use Eve\Command\PunCommand;
-use Eve\Command\SandwichCommand;
-use Eve\Command\SlapCommand;
-use Eve\Command\ThanksCommand;
-use Eve\Loader\JsonLoader;
-use React\EventLoop\Factory;
-use Slack\Payload;
 use Slack\User;
+use Slack\Payload;
+use Eve\Loader\JsonLoader;
+use Eve\Command\PunCommand;
+use Eve\Command\PingCommand;
+use Eve\Command\SlapCommand;
+use React\EventLoop\Factory;
+use Eve\Command\ThanksCommand;
+use Eve\Command\SandwichCommand;
+use Eve\Command\CommandCollection;
 
 final class Eve
 {
@@ -46,11 +46,9 @@ final class Eve
                     function (User $user) use ($client) {
                         $client->setUserId($user->getId());
                     }
-                )
-                ;
+                );
             }
-        )
-        ;
+        );
     }
 
     /**

@@ -1,10 +1,11 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Fun;
 
 use Eve\Message;
+use Eve\Command\ClientCommand;
 
-final class PingCommand extends ClientCommand
+final class SandwichCommand extends ClientCommand
 {
     /**
      * @param Message $message
@@ -13,7 +14,7 @@ final class PingCommand extends ClientCommand
      */
     public function canHandle(Message $message): bool
     {
-        return false !== stripos($message->text(), 'ping');
+        return preg_match('/(sudo )?make me a sandwich/', $message->text());
     }
 
     /**
@@ -23,8 +24,13 @@ final class PingCommand extends ClientCommand
     {
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
 
+        $content = false === stripos($message->text(), 'sudo') ?
+            'No, make one yourself' :
+            'User is not in the sudoers file. This incident will be reported.'
+        ;
+
         $this->client->sendMessage(
-            "{$messagePrefix}Pong!",
+            "{$messagePrefix}{$content}",
             $message->channel()
         );
     }

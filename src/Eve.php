@@ -3,14 +3,10 @@
 namespace Eve;
 
 use Slack\User;
+use Eve\Command;
 use Slack\Payload;
 use Eve\Loader\JsonLoader;
-use Eve\Command\PunCommand;
-use Eve\Command\PingCommand;
-use Eve\Command\SlapCommand;
 use React\EventLoop\Factory;
-use Eve\Command\ThanksCommand;
-use Eve\Command\SandwichCommand;
 use Eve\Command\CommandCollection;
 
 final class Eve
@@ -79,11 +75,12 @@ final class Eve
     private function makeCommandCollection(SlackClient $client): CommandCollection
     {
         return CommandCollection::make()
-            ->push(PingCommand::create($client))
-            ->push(SandwichCommand::create($client))
-            ->push(SlapCommand::create($client))
-            ->push(PunCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'puns.json')))
-            ->push(ThanksCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'thank-you.json')))
+            ->push(Command\Fun\SlapCommand::create($client))
+            ->push(Command\Fun\SandwichCommand::create($client))
+            ->push(Command\Utility\PingCommand::create($client))
+            ->push(Command\Fun\PunCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'puns.json')))
+            ->push(Command\Conversation\HelloCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'hello.json')))
+            ->push(Command\Conversation\ThanksCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'thank-you.json')))
         ;
     }
 

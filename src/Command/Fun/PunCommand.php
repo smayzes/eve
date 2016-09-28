@@ -1,10 +1,11 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Fun;
 
 use Eve\Message;
 use Eve\Loader\HasData;
 use Eve\Loader\HasDataTrait;
+use Eve\Command\ClientCommand;
 
 final class PunCommand extends ClientCommand implements HasData
 {

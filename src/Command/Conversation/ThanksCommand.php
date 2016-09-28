@@ -1,10 +1,11 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Conversation;
 
 use Eve\Message;
 use Eve\Loader\HasData;
 use Eve\Loader\HasDataTrait;
+use Eve\Command\ClientCommand;
 use Illuminate\Support\Collection;
 
 final class ThanksCommand extends ClientCommand implements HasData

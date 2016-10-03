@@ -50,7 +50,7 @@ final class GiphyCommand extends ClientCommand
         if ($matches[1]) {
             $result  = $this->giphyClient->getImageFor($matches[1][0]);
             $info    = json_decode($result, true);
-            if (!empty($data)) {
+            if (!empty($info)) {
                 $content = '>' . $info['data']['images']['downsized']['url'];
             }
         }

@@ -24,7 +24,7 @@ final class PingCommand extends ClientCommand
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
 
         $this->client->sendMessage(
-            "{$messagePrefix}Pong!",
+            "{$messagePrefix}`ACK`",
             $message->channel()
         );
     }

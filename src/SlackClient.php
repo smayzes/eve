@@ -2,10 +2,10 @@
 
 namespace Eve;
 
-use Slack\RealtimeClient;
+use Slack\RealTimeClient;
 use Slack\ChannelInterface;
 
-final class SlackClient extends RealtimeClient
+final class SlackClient extends RealTimeClient
 {
     /**
      * @var string

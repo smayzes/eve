@@ -1,12 +1,14 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Conversation;
 
-use Eve\Loader\HasData;
 use Eve\Message;
+use Eve\Loader\HasData;
 use Eve\Loader\HasDataTrait;
+use Eve\Command\ClientCommand;
+use Illuminate\Support\Collection;
 
-final class PunCommand extends ClientCommand implements HasData
+final class HelloCommand extends ClientCommand implements HasData
 {
     use HasDataTrait;
 
@@ -17,7 +19,7 @@ final class PunCommand extends ClientCommand implements HasData
      */
     public function canHandle(Message $message): bool
     {
-        return preg_match('/\b(pun)\b/', $message->text());
+        return preg_match('/\b(Hello|Hi|Hey|Yo)\b/i', $message->text());
     }
 
     /**
@@ -28,7 +30,7 @@ final class PunCommand extends ClientCommand implements HasData
         $this->loadData();
 
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
-        $content       = collect($this->data)->random();
+        $content       = $this->data->random();
 
         $this->client->sendMessage(
             "{$messagePrefix}{$content}",
@@ -36,3 +38,4 @@ final class PunCommand extends ClientCommand implements HasData
         );
     }
 }
+

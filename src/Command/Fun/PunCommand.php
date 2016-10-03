@@ -1,20 +1,15 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Fun;
 
-use Eve\Loader\HasData;
 use Eve\Message;
-use Illuminate\Support\Collection;
+use Eve\Loader\HasData;
 use Eve\Loader\HasDataTrait;
+use Eve\Command\ClientCommand;
 
-final class ThanksCommand extends ClientCommand implements HasData
+final class PunCommand extends ClientCommand implements HasData
 {
     use HasDataTrait;
-
-    /**
-     * @var Collection
-     */
-    private $data;
 
     /**
      * @param Message $message
@@ -23,7 +18,7 @@ final class ThanksCommand extends ClientCommand implements HasData
      */
     public function canHandle(Message $message): bool
     {
-        return preg_match('/\b(thanks)\b/', $message->text());
+        return preg_match('/\b(pun)\b/', $message->text());
     }
 
     /**
@@ -34,8 +29,7 @@ final class ThanksCommand extends ClientCommand implements HasData
         $this->loadData();
 
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
-
-        $content = collect($this->data)->random();
+        $content       = $this->data->random();
 
         $this->client->sendMessage(
             "{$messagePrefix}{$content}",

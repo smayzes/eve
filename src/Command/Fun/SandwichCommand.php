@@ -1,8 +1,9 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Fun;
 
 use Eve\Message;
+use Eve\Command\ClientCommand;
 
 final class SandwichCommand extends ClientCommand
 {

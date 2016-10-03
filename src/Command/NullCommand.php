@@ -21,6 +21,6 @@ final class NullCommand implements Command
      */
     public function handle(Message $message)
     {
-        ; // Do what Matthew does all day
+        ;
     }
 }

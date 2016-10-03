@@ -1,11 +1,17 @@
 <?php
 
-namespace Eve\Command;
+namespace Eve\Command\Conversation;
 
 use Eve\Message;
+use Eve\Loader\HasData;
+use Eve\Loader\HasDataTrait;
+use Eve\Command\ClientCommand;
+use Illuminate\Support\Collection;
 
-final class PingCommand extends ClientCommand
+final class ThanksCommand extends ClientCommand implements HasData
 {
+    use HasDataTrait;
+
     /**
      * @param Message $message
      *
@@ -13,7 +19,7 @@ final class PingCommand extends ClientCommand
      */
     public function canHandle(Message $message): bool
     {
-        return false !== stripos($message->text(), 'ping');
+        return preg_match('/\b(thanks)\b/', $message->text());
     }
 
     /**
@@ -21,10 +27,13 @@ final class PingCommand extends ClientCommand
      */
     public function handle(Message $message)
     {
+        $this->loadData();
+
         $messagePrefix = $message->isDm() ? '' : "<@{$message->user()}>: ";
+        $content       = $this->data->random();
 
         $this->client->sendMessage(
-            "{$messagePrefix}`ACK`",
+            "{$messagePrefix}{$content}",
             $message->channel()
         );
     }

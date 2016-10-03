@@ -39,7 +39,7 @@ final class GiphyCommand extends ClientCommand
     public function handle(Message $message)
     {
         if (!$this->giphyClient) {
-            throw new \Exception('No GiphyClient set.');
+            return;
         }
 
         $matches = [];
@@ -50,7 +50,7 @@ final class GiphyCommand extends ClientCommand
         if ($matches[1]) {
             $result  = $this->giphyClient->getImageFor($matches[1][0]);
             $info    = json_decode($result, true);
-            if (!empty($info)) {
+            if (!empty($info['data'])) {
                 $content = '>' . $info['data']['images']['downsized']['url'];
             }
         }

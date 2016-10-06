@@ -3,10 +3,14 @@
 namespace Eve\Command\Fun;
 
 use Eve\Message;
+use Eve\Loader\HasData;
+use Eve\Loader\HasDataTrait;
 use Eve\Command\ClientCommand;
 
-final class SlapCommand extends ClientCommand
+final class SlapCommand extends ClientCommand implements HasData
 {
+    use HasDataTrait;
+
     /**
      * @param Message $message
      *
@@ -22,6 +26,8 @@ final class SlapCommand extends ClientCommand
      */
     public function handle(Message $message)
     {
+        $this->loadData();
+
         $receiver = $this->receiver($message);
 
         $content = '';
@@ -37,7 +43,7 @@ final class SlapCommand extends ClientCommand
             $content = "I can only slap users who are here!\n";
         }
 
-        $content .= "_slaps {$receiver} around a bit with a wet fish._";
+        $content .= '_' . str_replace('<USER>', $receiver, $this->data->random()) . '_';
 
         $this->client->sendMessage(
             $content,

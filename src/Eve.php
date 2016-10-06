@@ -82,7 +82,7 @@ final class Eve
 
         return CommandCollection::make()
             ->push(Command\Fun\GiphyCommand::create($client)->setGiphyClient($giphyClient))
-            ->push(Command\Fun\SlapCommand::create($client))
+            ->push(Command\Fun\SlapCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'slaps.json')))
             ->push(Command\Fun\SandwichCommand::create($client))
             ->push(Command\Utility\PingCommand::create($client))
             ->push(Command\Fun\PunCommand::create($client)->setLoader(new JsonLoader(self::DATA_DIRECTORY . 'puns.json')))

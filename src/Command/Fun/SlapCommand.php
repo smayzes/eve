@@ -31,6 +31,12 @@ final class SlapCommand extends ClientCommand
             $content = "Ha ha! I don't think so!\n";
         }
 
+        if (!$receiver) {
+            $receiver = "<@{$message->user()}>";
+
+            $content = "I can only slap users who are here!\n";
+        }
+
         $content .= "_slaps {$receiver} around a bit with a wet fish._";
 
         $this->client->sendMessage(
@@ -46,8 +52,8 @@ final class SlapCommand extends ClientCommand
      */
     private function receiver(Message $message): string
     {
-        preg_match('/slap ([<@]+)?([\w]+)(>)?/', $message->text(), $matches);
+        preg_match('/slap ([<@]+)([\w]+)(>)/', $message->text(), $matches);
 
-        return $matches[1] . $matches[2] . ($matches[3] ?? '');
+        return ($matches[1] ?? '') . ($matches[2] ?? '') . ($matches[3] ?? '');
     }
 }

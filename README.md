@@ -12,7 +12,6 @@ Eve is a PHP Slack bot for the Larachat community, powered by community contribu
 ## To Get Started
 In order to get Eve up and running you need the following:
 
-- PHP 7.0 or greater
 - A Slack Bot API token which can be generated in the admin interface of your Slack account
 
 Once you have the API token, copy the `.env.example` file to `.env` and paste in your bot token.
@@ -23,16 +22,16 @@ To run Eve, first install the composer dependencies:
 composer install
 ```
 
-And then run the `eve.php` file:
+And then run the `eve:run` artisan command:
 
 ```
-php eve.php
+php artisan eve:run
 ```
 
 Eve will connect to your Slack account and will then respond to messages mentioning her and DMs.
 
 ## Roadmap
-Eve is currently in a very early alpha stage, and as such things are changing quickly. Currently, there are a number of commands:
+Eve is currently in an early alpha stage, and as such things are changing quickly. Currently, there are a number of commands:
 
 - Hello (`Hi, @eve`)
 - Thanks (`Thanks, @eve`)

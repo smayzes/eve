@@ -53,7 +53,7 @@ final class WeatherCommand extends ClientCommand
 
             if (!empty($info['name'])) {
                 $content = sprintf(
-                    '>Today\'s weather for *%s* today will be *%s*',
+                    '>Today\'s weather for *%s* will be *%s*',
                     $info['name'],
                     $info['weather'][0]['main']
                 );

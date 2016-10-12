@@ -7,14 +7,14 @@ use App\Slack\Event;
 use App\Slack\Message;
 use App\Handlers\Handler;
 
-final class HelloHandler extends Handler
+final class ThanksHandler extends Handler
 {
     /**
      * {@inheritdoc}
      */
     public function canHandle(Event $event)
     {
-        return $event->isMessage() && $event->matches('/\b(Hello|Hi|Hey|Yo)\b/i');
+        return $event->isMessage() && $event->matches('/\b(Thanks|Cheers|Thankyou|Thank you)\b/i');
     }
 
     /**
@@ -23,9 +23,10 @@ final class HelloHandler extends Handler
     public function handle(Event $event, Eve $eve)
     {
         $eve->send(
-            Message::saying('Howdy!')
+            Message::saying('No problem!')
             ->inChannel($event->channel())
             ->to($event->sender())
         );
     }
 }
+

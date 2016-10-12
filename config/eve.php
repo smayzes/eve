@@ -7,5 +7,6 @@ return [
 
     'handlers' => [
         App\Handlers\Human\HelloHandler::class,
+        App\Handlers\Human\ThanksHandler::class,
     ],
 ];

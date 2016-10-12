@@ -2,11 +2,13 @@
 
 namespace App\Bots;
 
+use Slack\User;
 use Slack\Payload;
 use App\Slack\Event;
 use App\Slack\Message;
 use Slack\RealTimeClient;
 use React\EventLoop\Factory;
+use App\Handlers\HandlerManager;
 use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 
@@ -16,6 +18,11 @@ final class Eve
      * @var string
      */
     private $token;
+
+    /**
+     * @var HandlerManager
+     */
+    private $handlerManager;
 
     /**
      * @var RealTimeClient
@@ -28,11 +35,17 @@ final class Eve
     private $loop;
 
     /**
+     * @param User
+     */
+    private $me;
+
+    /**
      * @param string $token
      */
-    public function __construct($token)
+    public function __construct($token, HandlerManager $handlerManager)
     {
-        $this->token = $token;
+        $this->token          = $token;
+        $this->handlerManager = $handlerManager;
 
         $this->initialiseClient();
     }
@@ -47,15 +60,9 @@ final class Eve
         $this->client->on(
             'message',
             function (Payload $data) {
-                $handler = app()->make(\App\Handlers\Human\HelloHandler::class);
-                $event = Event::withPayload($data);
-
-                if ($handler->canHandle($event)) {
-                    $handler->handle($event);
-                }
+                $this->handlerManager->handle(Event::withPayload($data), $this);
             }
         );
-
     }
 
     /**
@@ -63,7 +70,11 @@ final class Eve
      */
     public function connect()
     {
-        return $this->client->connect();
+        return $this->client->connect()->then(function () { 
+            $this->client->getAuthedUser()->then(function (User $user) {
+                $this->me = $user;
+            });
+        });
     }
 
     public function run()
@@ -106,5 +117,13 @@ final class Eve
                 });
             })
         ;
+    }
+
+    /**
+     * @return string
+     */
+    public function userId()
+    {
+        return $this->me->getId();
     }
 }

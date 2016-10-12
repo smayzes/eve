@@ -44,6 +44,30 @@ final class Event
     }
 
     /**
+     * @return string
+     */
+    public function text()
+    {
+        return $this->payload['text'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDirectMessage()
+    {
+        return $this->payload['channel'][0] == 'D';
+    }
+
+    /**
+     * @return bool
+     */
+    public function mentions($userId)
+    {
+        return false !== stripos($this->payload['text'], "<@{$userId}>");
+    }
+
+    /**
      * @param string $name
      * @param array  $arguments
      *

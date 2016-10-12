@@ -9,27 +9,6 @@ use App\Slack\Message;
 abstract class Handler
 {
     /**
-     * @var Eve
-     */
-    private $eve;
-
-    /**
-     * @param Eve $eve
-     */
-    public function __construct(Eve $eve)
-    {
-        $this->eve = $eve;
-    }
-
-    /**
-     * @param Message $message
-     */
-    protected function send(Message $message)
-    {
-        $this->eve->send($message);
-    }
-
-    /**
      * @param Event $event
      */
     abstract public function canHandle(Event $event);
@@ -37,5 +16,5 @@ abstract class Handler
     /**
      * @param Event $event
      */
-    abstract public function handle(Event $event);
+    abstract public function handle(Event $event, Eve $eve);
 }

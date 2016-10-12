@@ -12,9 +12,13 @@ final class HelloHandler extends Handler
     /**
      * {@inheritdoc}
      */
-    public function canHandle(Event $event)
+    public function canHandle(Event $event, Eve $eve)
     {
-        return $event->isMessage() && $event->matches('/\b(Hello|Hi|Hey|Yo)\b/i');
+        return 
+            $event->isMessage() && 
+            ($event->isDirectMessage() || $event->mentions($eve->userId())) &&
+            $event->matches('/\b(Hello|Hi|Hey|Yo)\b/i')
+        ;
     }
 
     /**

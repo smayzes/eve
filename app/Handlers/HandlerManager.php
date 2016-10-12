@@ -27,13 +27,11 @@ final class HandlerManager
      */
     public function handle(Event $event, Eve $eve)
     {
-        if ($event->isDirectMessage() || $event->mentions($eve->userId())) {
-            $this->handlers->each(function (Handler $handler) use ($event, $eve) {
-                if ($handler->canHandle($event)) {
-                    $handler->handle($event, $eve);
-                }
-            });
-        }
+        $this->handlers->each(function (Handler $handler) use ($event, $eve) {
+            if ($handler->canHandle($event, $eve)) {
+                $handler->handle($event, $eve);
+            }
+        });
     }
 
     /**

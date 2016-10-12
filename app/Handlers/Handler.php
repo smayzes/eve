@@ -11,7 +11,7 @@ abstract class Handler
     /**
      * @param Event $event
      */
-    abstract public function canHandle(Event $event);
+    abstract public function canHandle(Event $event, Eve $eve);
 
     /**
      * @param Event $event

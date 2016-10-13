@@ -126,6 +126,6 @@ final class Eve
      */
     public function userId()
     {
-        return $this->me->getId() ?? '';
+        return isset($this->me) ? $this->me->getId() : '';
     }
 }

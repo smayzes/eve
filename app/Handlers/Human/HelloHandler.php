@@ -7,11 +7,12 @@ use App\Slack\Message;
 use App\Handlers\Handler;
 use App\Loader\LoadsData;
 use App\Loader\JsonLoader;
-use Illuminate\Support\Collection;
 
 final class HelloHandler extends Handler
 {
     use LoadsData;
+
+    protected $dataFile = 'hello.json';
 
     /**
      * @param JsonLoader $loader
@@ -38,7 +39,7 @@ final class HelloHandler extends Handler
      */
     public function handle(Event $event)
     {
-        $this->loadData(storage_path('app/data/') . 'hello.json');
+        $this->loadData();
 
         $this->send(
             Message::saying($this->data->random())

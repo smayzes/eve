@@ -4,6 +4,7 @@ namespace App\Loader;
 
 use Illuminate\Support\Collection;
 use App\Exceptions\NoLoaderException;
+use App\Exceptions\NoDataFileDefinedException;
 
 trait LoadsData
 {
@@ -15,14 +16,18 @@ trait LoadsData
     /**
      * @param string $path
      */
-    public function loadData($path)
+    public function loadData()
     {
         if (! $this->loader) {
             throw new NoLoaderException();
         }
 
+        if (! isset($this->dataFile)) {
+            throw new NoDataFileDefinedException();
+        }
+
         if (! $this->data) {
-            $this->data = $this->loader->load($path);
+            $this->data = $this->loader->load(storage_path('app/data/') . $this->dataFile);
         }
     }
 }

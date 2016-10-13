@@ -5,9 +5,22 @@ namespace App\Handlers\Human;
 use App\Slack\Event;
 use App\Slack\Message;
 use App\Handlers\Handler;
+use App\Loader\LoadsData;
+use App\Loader\JsonLoader;
+use Illuminate\Support\Collection;
 
 final class HelloHandler extends Handler
 {
+    use LoadsData;
+
+    /**
+     * @param JsonLoader $loader
+     */
+    public function __construct(JsonLoader $loader)
+    {
+        $this->loader = $loader;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -25,8 +38,10 @@ final class HelloHandler extends Handler
      */
     public function handle(Event $event)
     {
+        $this->loadData(storage_path('app/data/') . 'hello.json');
+
         $this->send(
-            Message::saying('Howdy!')
+            Message::saying($this->data->random())
             ->inChannel($event->channel())
             ->to($event->sender())
         );

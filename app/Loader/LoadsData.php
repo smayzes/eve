@@ -27,7 +27,7 @@ trait LoadsData
         }
 
         if (! $this->data) {
-            $this->data = $this->loader->load(storage_path('app/data/') . $this->dataFile);
+            $this->data = $this->loader->load(resource_path('data/') . $this->dataFile);
         }
     }
 }

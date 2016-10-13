@@ -95,7 +95,7 @@ final class Eve
 
         return $this
             ->client
-            ->getChannelGroupOrDMById($message->channel())
+            ->getChannelGroupOrDMByID($message->channel())
             ->then(function ($channel) use ($message) {
                 // Only mention the recipient if it isn't a Direct Message
                 $mention = ($message->recipient() && $channel->getId()[0] !== 'D') ? "<@{$message->recipient()}> " : '';

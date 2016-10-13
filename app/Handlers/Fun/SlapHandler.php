@@ -79,7 +79,7 @@ final class SlapHandler extends Handler
             $matches
         );
 
-        return collect($matches[0]);
+        return collect($matches[0])->unique();
     }
 
     /**

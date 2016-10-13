@@ -47,6 +47,8 @@ final class Eve
         $this->token          = $token;
         $this->handlerManager = $handlerManager;
 
+        $this->handlerManager->setEve($this);
+
         $this->initialiseClient();
     }
 
@@ -60,7 +62,7 @@ final class Eve
         $this->client->on(
             'message',
             function (Payload $data) {
-                $this->handlerManager->handle(Event::withPayload($data), $this);
+                $this->handlerManager->handle(Event::withPayload($data));
             }
         );
     }

@@ -9,12 +9,46 @@ use App\Slack\Message;
 abstract class Handler
 {
     /**
-     * @param Event $event
+     * @var Eve
      */
-    abstract public function canHandle(Event $event, Eve $eve);
+    protected $eve;
+
+    /**
+     * @var bool
+     */
+    protected $stopPropagation = true;
+
+    /**
+     * @param Eve $eve
+     */
+    public function setEve(Eve $eve)
+    {
+        $this->eve = $eve;
+    }
 
     /**
      * @param Event $event
      */
-    abstract public function handle(Event $event, Eve $eve);
+    abstract public function canHandle(Event $event);
+
+    /**
+     * @param Event $event
+     */
+    abstract public function handle(Event $event);
+
+    /**
+     * @return bool
+     */
+    public function shouldStopPropagation()
+    {
+        return $this->stopPropagation;
+    }
+
+    /**
+     * @param Message $message
+     */
+    public function send(Message $message)
+    {
+        $this->eve->send($message);
+    }
 }

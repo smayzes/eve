@@ -2,7 +2,6 @@
 
 namespace App\Handlers\Human;
 
-use App\Bots\Eve;
 use App\Slack\Event;
 use App\Slack\Message;
 use App\Handlers\Handler;
@@ -12,11 +11,11 @@ final class ThanksHandler extends Handler
     /**
      * {@inheritdoc}
      */
-    public function canHandle(Event $event, Eve $eve)
+    public function canHandle(Event $event)
     {
         return 
             $event->isMessage() && 
-            ($event->isDirectMessage() || $event->mentions($eve->userId())) &&
+            ($event->isDirectMessage() || $event->mentions($this->eve->userId())) &&
             $event->matches('/\b(Thanks|Cheers|Thankyou|Thank you)\b/i')
         ;
     }
@@ -24,9 +23,9 @@ final class ThanksHandler extends Handler
     /**
      * {@inheritdoc}
      */
-    public function handle(Event $event, Eve $eve)
+    public function handle(Event $event)
     {
-        $eve->send(
+        $this->send(
             Message::saying('No problem!')
             ->inChannel($event->channel())
             ->to($event->sender())

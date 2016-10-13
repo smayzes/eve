@@ -42,7 +42,7 @@ final class SlapHandler extends Handler
             $content   = "I can only slap people who are here!\n";
         }
 
-        $content .= "_slaps {$this->joinReceivers($receivers)} with a large fish_";
+        $content .= "_slaps {$this->joinReceivers($receivers->take(10))} with a large fish_";
 
         $this->send(
             Message::saying($content)

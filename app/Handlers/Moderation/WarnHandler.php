@@ -30,7 +30,7 @@ final class WarnHandler extends Handler
     {
         return 
             $event->isMessage() && 
-            ($event->isDirectMessage() || $event->mentions($this->eve->userId())) &&
+            $event->isDirectMessage() &&
             $this->eve->userIsAdmin($event->sender()) &&
             $event->matches('/warn ./i')
         ;

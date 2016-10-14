@@ -43,16 +43,26 @@ final class WarnHandler extends Handler
     {
         $this->loadData();
 
-        $this
-            ->receivers($event)
-            ->each(function ($receiver) {
-                $this->send(
-                    Message::saying($this->data->random())
-                    ->to($receiver)
-                    ->privately()
-                );
-            })
+        $receivers = $this->receivers($event);
+
+        $receivers->each(function ($receiver) {
+            $this->send(
+                Message::saying($this->data->random())
+                ->to($receiver)
+                ->privately()
+            );
+        });
+
+        $content = $receivers->isEmpty() ?
+            'No users were warned' :
+            'Warned ' . $this->joinReceivers($receivers)
         ;
+
+        $this->send(
+            Message::saying($content)
+            ->to($event->sender())
+            ->privately()
+        );
     }
 
     /**
@@ -69,5 +79,25 @@ final class WarnHandler extends Handler
         );
 
         return collect($matches[1])->unique();
+    }
+
+    /**
+     * @param Collection $receivers
+     *
+     * @return string
+     */
+    private function joinReceivers(Collection $receivers)
+    {
+        $last = "<@{$receivers->pop()}>";
+
+        if (! $receivers->isEmpty()) {
+            return $receivers
+                ->map(function ($receiver) {
+                    return "<@{$receiver}>";
+                })
+                ->implode(', ') . ' and ' . $last;
+        }
+
+        return $last;
     }
 }

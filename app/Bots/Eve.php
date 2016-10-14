@@ -128,4 +128,20 @@ final class Eve
     {
         return isset($this->me) ? $this->me->getId() : '';
     }
+
+    /**
+     * @param string $userId
+     *
+     * @return bool
+     */
+    public function userIsAdmin($userId)
+    {
+        $isAdmin = false;
+
+        $this->client->getUserById($userId)->done(function ($user) use (&$isAdmin) {
+            $isAdmin = $user->isAdmin();
+        });
+
+        return $isAdmin;
+    }
 }

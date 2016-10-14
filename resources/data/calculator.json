@@ -4,23 +4,23 @@
         "Please don't break the universe next time!"
     ],
     "SyntaxErrorException": [
-        "Hmm, it looks like you made a typo..."
+        "Did you make a mistake?",
+        "Hmm, it looks like you made a mistake"
     ],
     "UnknownConstantException": [
-        "You've used a constant I do not know... yet..."
+        "You've used a constant I don't know about... yet..."
     ],
     "UnknownFunctionException": [
-        "One of your used functions is unknown to me, blame my lazy programmer!"
+        "Sorry, but I don't recognise one of the functions that you used!"
     ],
     "UnknownOperatorException": [
-        "One of the operators looks like Chinese for me..."
+        "Eek! Did you invent your own operator?"
     ],
     "UnknownTokenException": [
-        "What is that kind of token?",
-        "One of your token looks like Chinese to me..."
+        "I don't recognise those tokens!"
     ],
     "UnknownVariableException": [
-        "You forgot to tell me about one of the variables.",
+        "Did you forget to tell me about one of the variables?",
         "I need all variables to calculate the outcome"
     ]
 }

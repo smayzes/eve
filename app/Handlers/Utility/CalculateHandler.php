@@ -27,7 +27,7 @@ final class CalculateHandler extends Handler
      */
     public function __construct(JsonLoader $loader, Calculator $calculator)
     {
-        $this->loader = $loader;
+        $this->loader     = $loader;
         $this->calculator = $calculator;
     }
 
@@ -39,7 +39,7 @@ final class CalculateHandler extends Handler
         return
             $event->isMessage() &&
             ($event->isDirectMessage() || $event->mentions($this->eve->userId())) &&
-            $event->matches('/\b(calc)\b/i')
+            $event->matches('/calculate .+/i')
         ;
     }
 
@@ -51,22 +51,22 @@ final class CalculateHandler extends Handler
         $this->loadData();
 
         $expression = $this->getExpression($event);
-        $variables = $this->getVariables($event);
+        $variables  = $this->getVariables($event);
 
         $content = $expression
-            ? 'Well, that went worse than expected... Could you try again with something else?'
-            : 'Are you even trying? You could at least give me a number to calculate...';
+            ? 'That could have been better... Could you try again with another calculation?'
+            : 'I need a calculation to work with...';
 
         if ($expression) {
             try {
                 $outcome = $this->calculator->parse($expression)->evaluate($variables);
-                $query = $variables ? '_where_ ' . http_build_query($variables, '', ', ') : '';
-                $content = "{$expression} _evaluates to_ *{$outcome}* {$query}";
+                $query   = $variables ? ' where `' . http_build_query($variables, '', ', ') . '`' : '';
+                $content = "`{$expression} = {$outcome}`{$query}";
             } catch (MathParserException $error) {
                 $errorName = class_basename($error);
 
                 if ($this->data->has($errorName)) {
-                    $content = Collection::make($this->data->get($errorName))->random();
+                    $content = collect($this->data->get($errorName))->random();
                 }
             }
         }
@@ -86,9 +86,9 @@ final class CalculateHandler extends Handler
      */
     protected function getExpression(Event $event): string
     {
-        preg_match('/(?<=calc)(.*?)(--[\w]+|$)/im', $event->text(), $match);
+        preg_match('/(?<=calculate)(.*?)(--[\w]+|$)/im', $event->text(), $match);
 
-        return isset($match[1]) ? $match[1] : '';
+        return isset($match[1]) ? trim($match[1]) : '';
     }
 
     /**
@@ -108,5 +108,3 @@ final class CalculateHandler extends Handler
         return [];
     }
 }
-
-

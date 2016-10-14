@@ -39,7 +39,7 @@ final class CalculateHandler extends Handler
         return
             $event->isMessage() &&
             ($event->isDirectMessage() || $event->mentions($this->eve->userId())) &&
-            $event->matches('/calculate .+/i')
+            $event->matches('/\b(calculate)\b/i')
         ;
     }
 

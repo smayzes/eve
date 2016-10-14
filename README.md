@@ -31,27 +31,28 @@ php artisan eve:run
 Eve will connect to your Slack account and will then respond to messages mentioning her and DMs.
 
 ## Roadmap
-Eve is currently in an early alpha stage, and as such things are changing quickly. Currently, there are a number of commands:
+Eve is currently in an early stage, and as such things are changing quickly. Currently, there are a number of commands:
 
 - Hello (`Hi, @eve`)
 - Thanks (`Thanks, @eve`)
 - Ping (`@eve ping`)
 - Pun (`@eve pun`)
 - Sandwich (`@eve make me a sandwich`)
-- Slap (`@eve slap @someone`)
+- Slap (`@eve slap @someone`, `@eve slap @someone @someonelse`)
+- Eight Ball (`@eve 8-ball`)
+- Calculate (`@eve calculate 2x + 3y --x=2 --y=4`)
+- Giphy (`@eve giphy test`)
 
 The roadmap is as follows:
 
-1. Refactor and make adding commands even easier
-2. Add throttling:
+1. Add throttling:
     - Per-user per-command throttling
     - Per-command global throttling
-3. Make it easier to interact with users
-4. Persistent caching / state
-5. User moderation
-6. Tests!
+2. Persistent caching / state
+3. User moderation
+4. Tests!
 
-As always, the roadmap is open to suggestions from the community and code contributions are welcomed and encouraged!
+As always, the roadmap is open to suggestions from the community and code contributions are welcomed and encouraged! In addition to this, improvements to the code quality and structure / architecture are always welcome additions.
 
 ## Contributing
 Contribute to Eve by forking the repository, making your changes in your fork and submitting a PR. The code follows some simple coding standards:
@@ -62,6 +63,19 @@ Contribute to Eve by forking the repository, making your changes in your fork an
 These are not 100% strict requirements - if the code looks good, is easy to understand and is focussed and testable then it will be okay.
 
 When contributing code, testing is strongly encouraged: the more we can test now, the less maintainenance problems we will have further down the line!
+
+### Contributors
+A number of people have helped Eve to come this far. In no particular order:
+
+- [Andreas Elia](https://github.com/andreaselia) (`@andreaselia` on Larachat)
+- [Apostolos Spanos](https://github.com/apspan)
+- [Brett Taylor](https://github.com/glutnix) (`@glutnix` on Larachat)
+- [Cedric van Putten](https://github.com/bycedric) (`@bycedric` on Larachat)
+- [Damon Jones](https://github.com/damonjones)
+- [Dan Rovito](https://github.com/danrovito) (`@dan` on Larachat)
+- [Jens Eeckhout](https://github.com/jenseeckhout) (`@jense` on Larachat)
+- [Rizqi Djamaluddin](https://github.com/rizqidjamaluddin) (`@rizqi` on Larachat)
+- [Shawn Mayzes](https://github.com/smayzes) (`@smayzes` on Larachat)
 
 ## Have fun!
 The goal of Eve is to make it easy and accessible for members of the community to contribute to a project that is actively used by the community.

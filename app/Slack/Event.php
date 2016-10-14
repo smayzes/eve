@@ -79,7 +79,10 @@ final class Event
             return false;
         }
         
-        return $this->payload['type'] === snake_case(substr($name, 2));
+        return 
+            $this->payload['type'] === snake_case(substr($name, 2)) ||
+            $this->payload['subtype'] === snake_case(substr($name, 2))
+        ;
     }
 
     /**

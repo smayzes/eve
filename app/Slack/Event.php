@@ -32,7 +32,7 @@ final class Event
      */
     public function sender()
     {
-        return $this->payload['user'];
+        return isset($this->payload['user']) ? $this->payload['user'] : null;
     }
 
     /**

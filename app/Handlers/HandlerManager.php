@@ -14,6 +14,11 @@ final class HandlerManager
     private $handlers;
 
     /**
+     * @var Eve
+     */
+    private $eve;
+
+    /**
      * @param Collection $handlers
      */
     private function __construct(Collection $handlers)
@@ -26,6 +31,8 @@ final class HandlerManager
      */
     public function setEve(Eve $eve)
     {
+        $this->eve = $eve;
+
         $this->handlers->each(function (Handler $handler) use ($eve) {
             $handler->setEve($eve);
         });
@@ -36,13 +43,15 @@ final class HandlerManager
      */
     public function handle(Event $event)
     {
-        $this->handlers->each(function (Handler $handler) use ($event) {
-            if ($handler->canHandle($event)) {
-                $handler->handle($event);
+        if (!$event->isBotMessage()) {
+            $this->handlers->each(function (Handler $handler) use ($event) {
+                if ($handler->canHandle($event)) {
+                    $handler->handle($event);
 
-                return ! $handler->shouldStopPropagation();
-            }
-        });
+                    return ! $handler->shouldStopPropagation();
+                }
+            });
+        }
     }
 
     /**

@@ -43,7 +43,7 @@ final class HandlerManager
      */
     public function handle(Event $event)
     {
-        if (!$event->isBotMessage()) {
+        if ($event->sender() && !$event->isBotMessage()) {
             $this->handlers->each(function (Handler $handler) use ($event) {
                 if ($handler->canHandle($event)) {
                     $handler->handle($event);

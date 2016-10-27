@@ -53,7 +53,7 @@ final class LaravelHandler extends Handler
         $version    = $this->getVersion($parameters);
         $query      = $this->getQuery($parameters);
 
-        $reply = $url = sprintf('https://laravel.com/docs/%s/%s', $version, urlencode($query));
+        $reply = $url = sprintf('https://laravel.com/docs/%s/%s', $version, $query);
 
         try {
             $this->client->head($url);

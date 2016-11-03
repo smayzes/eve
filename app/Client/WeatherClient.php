@@ -13,23 +13,11 @@ final class WeatherClient
     private $client;
 
     /**
-     * @var string
+     * @param OpenWeatherMap $client
      */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $unit;
-
-    /**
-     * @param $apiKey
-     * @internal param OpenWeatherMap $client
-     */
-    public function __construct($apiKey)
+    public function __construct(OpenWeatherMap $client)
     {
-        $this->client  = new OpenWeatherMap($apiKey);
-        $this->apiKey  = $apiKey;
+        $this->client  = $client;
     }
 
     /**
@@ -37,22 +25,30 @@ final class WeatherClient
      * @param string $unit
      * @param string $language
      *
-     * @return null|string
+     * @return string
      */
     public function getWeather($query, $unit, $language)
     {
-        $unit == 'metric' ? $this->unit = 'C' : $this->unit = 'F';
+        $displayedUnit = $unit === 'metric' ? 
+            $this->unit = 'C' : 
+            $this->unit = 'F'
+        ;
 
         try {
-            $result = $this->client->getWeather($query, $unit, $language);
-            $response = '*'.$result->city->name.'* has *'.$result->weather->description.
-                            '* and a temperature of *'.$result->temperature->now->getValue().$this->unit.'*';
+            $result   = $this->client->getWeather($query, $unit, $language);
+            $response = sprintf(
+                '*%s* has *%s* and a temperature of *%dº%s*', 
+                $result->city->name,
+                $result->weather->description,
+                $result->temperature->now->getValue(),
+                $this->unit
+            );
         } catch(OWMException $e) {
-            $response = "Sorry, I can't find that place";
+            $response = 'Sorry, I can\'t find that place';
         } catch(\Exception $e) {
-            $response = "Unknown Error";
+            $response = 'Unknown Error';
         }
         return $response;
     }
-
 }
+

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Bots\Eve;
+use Cmfcmf\OpenWeatherMap;
 use App\Client\GiphyClient;
 use App\Client\WeatherClient;
 use App\Handlers\HandlerManager;
@@ -20,7 +21,12 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->when(GiphyClient::class)->needs('$baseUrl')->give($this->app['config']->get('eve.services.giphy.base_url'));
         $this->app->when(GiphyClient::class)->needs('$apiKey')->give($this->app['config']->get('eve.services.giphy.api_key'));
-        $this->app->when(WeatherClient::class)->needs('$apiKey')->give($this->app['config']->get('eve.services.weather.api_key'));
+        
+        $this->app->bind(WeatherClient::class, function ($app) {
+            return new WeatherClient(
+                new OpenWeatherMap($this->app['config']->get('eve.services.weather.api_key'))
+            );
+        });
 
         $this->app->bind(HandlerManager::class, function ($app) {
             $handlers = new Collection();

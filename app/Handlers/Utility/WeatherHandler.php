@@ -2,14 +2,18 @@
 
 namespace App\Handlers\Utility;
 
-use App\Client\WeatherClient;
 use App\Slack\Event;
 use App\Slack\Message;
 use App\Handlers\Handler;
+use App\Client\WeatherClient;
 use Illuminate\Support\Collection;
 
 final class WeatherHandler extends Handler
 {
+    const METRIC           = 'metric';
+    const IMPERIAL         = 'imperial';
+    const DEFAULT_LANGUAGE = 'en';
+
     /**
      * @var WeatherClient
      */
@@ -19,11 +23,9 @@ final class WeatherHandler extends Handler
      * @var array
      */
     private static $units = [
-        'metric', 'imperial'
+        self::METRIC,
+        self::IMPERIAL,
     ];
-
-    const DEFAULT_UNIT = 'imperial';
-    const DEFAULT_LANGUAGE = 'en';
 
     /**
      * @param WeatherClient $client
@@ -55,9 +57,10 @@ final class WeatherHandler extends Handler
         $query      = $this->getQuery($parameters);
         $unit       = $this->getUnit($parameters);
 
-        $query ?
-            $response = $this->client->getWeather($query, $unit, self::DEFAULT_LANGUAGE) :
-            $response = 'Please provide me with a location. Like `weather chicago '.$unit.'`';
+        $response = $query ?
+            $this->client->getWeather($query, $unit, self::DEFAULT_LANGUAGE) :
+            'Please provide me with a location. Like `weather chicago ' . $unit . '`'
+        ;
 
         $this->send(
             Message::saying($response)
@@ -83,7 +86,8 @@ final class WeatherHandler extends Handler
      */
     private function getUnit(array $parameters)
     {
-        $unit = self::DEFAULT_UNIT;
+        $unit = self::METRIC;
+
         collect($parameters)->each(function ($parameter) use (&$unit) {
             if (in_array($parameter, self::$units)) {
                 $unit = $parameter;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Handlers\Utility;
+namespace App\Handlers\Reference;
 
 use App\Slack\Event;
 use App\Slack\Message;

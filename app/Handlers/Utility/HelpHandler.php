@@ -26,7 +26,7 @@ final class HelpHandler extends Handler
     public function handle(Event $event)
     {
         $message = <<<EOT
-Eve is a PHP Slack bot for the Larachat community, powered by community contributions. 
+Eve is a PHP Slack bot for the Larachat community, powered by community contributions.
 
 Send commands to Eve via mentioning or direct message.
 
@@ -46,6 +46,7 @@ help       - show list of available commands        - @eve help
 laravel    - search the laravel docs                - @eve laravel middleware
 imdb       - search for a movie on imdb             - @eve imdb the matrix
 weather    - get the current weather for a location - @eve weather chicago
+rfc        - search for an RFC                      - @eve rfc 123
 ```
 
 Contributions are welcomed and encouraged.
